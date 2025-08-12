@@ -2,6 +2,11 @@
 
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('welcome');
+Route::get('/', [\App\Http\Controllers\BookController::class, 'index'])->name('books.index');
+
+Route::get('/authors/top', [\App\Http\Controllers\AuthorController::class, 'getAuthors'])->name('authors.top');
+
+Route::prefix('ratings')->group(function () {
+    Route::get('/create', [\App\Http\Controllers\RatingController::class, 'create'])->name('ratings.create');
+    Route::post('/', [\App\Http\Controllers\RatingController::class, 'store'])->name('ratings.store');
 });
