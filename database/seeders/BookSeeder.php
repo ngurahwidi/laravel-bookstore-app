@@ -13,10 +13,16 @@ class BookSeeder extends Seeder
 {
     public function run(): void
     {
+        ini_set('memory_limit', '-1'); //Hanya untuk data yang besar masuk secara bersamaan
+
+        // Alternatif jika tidak mengatur memory limit, tetapi data tidak dinamis jika seeder di generate lebih dari sekali
+        // $authorIds = range(1, 1000);
+        // $categoryIds = range(1, 3000);
+
         $faker = Faker::create();
         $now = now();
-        $authorIds = range(1, 1000);
-        $categoryIds = range(1, 3000);
+        $authorIds = Author::pluck('id')->toArray();
+        $categoryIds = Category::pluck('id')->toArray();
         $books = [];
         $batchSize = 5000;
 
